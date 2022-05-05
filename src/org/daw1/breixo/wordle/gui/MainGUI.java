@@ -10,6 +10,10 @@ package org.daw1.breixo.wordle.gui;
  * @author Breixo
  */
 public class MainGUI extends javax.swing.JFrame {
+    
+    private static final java.awt.Color COLOR_VERDE = new java.awt.Color(0, 153, 0);
+    private static final java.awt.Color COLOR_AMARILLO = new java.awt.Color(204, 153, 0);
+    private static final java.awt.Color COLOR_ROJO = new java.awt.Color(255, 0, 0);
 
     /**
      * Creates new form MainGUI
@@ -26,6 +30,7 @@ public class MainGUI extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         mainJPanel = new javax.swing.JPanel();
         letrasJPanel = new javax.swing.JPanel();
@@ -60,6 +65,20 @@ public class MainGUI extends javax.swing.JFrame {
         jLabel6_4 = new javax.swing.JLabel();
         jLabel6_5 = new javax.swing.JLabel();
         bottomJPanel = new javax.swing.JPanel();
+        estadoJPanel = new javax.swing.JPanel();
+        malJPanel = new javax.swing.JPanel();
+        malJLabel = new javax.swing.JLabel();
+        existenJPanel = new javax.swing.JPanel();
+        existenJLabel = new javax.swing.JLabel();
+        bienJPanel = new javax.swing.JPanel();
+        bienJLabel = new javax.swing.JLabel();
+        inputJPanel = new javax.swing.JPanel();
+        palabraJTextField = new javax.swing.JTextField();
+        enviarJButton = new javax.swing.JButton();
+        exitoJPanel = new javax.swing.JPanel();
+        finalJLabel = new javax.swing.JLabel();
+        errorJPanel = new javax.swing.JPanel();
+        errorJLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("DAW1 Wordle Breixo");
@@ -220,16 +239,73 @@ public class MainGUI extends javax.swing.JFrame {
 
         mainJPanel.add(letrasJPanel, java.awt.BorderLayout.CENTER);
 
-        javax.swing.GroupLayout bottomJPanelLayout = new javax.swing.GroupLayout(bottomJPanel);
-        bottomJPanel.setLayout(bottomJPanelLayout);
-        bottomJPanelLayout.setHorizontalGroup(
-            bottomJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 466, Short.MAX_VALUE)
-        );
-        bottomJPanelLayout.setVerticalGroup(
-            bottomJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
+        bottomJPanel.setPreferredSize(new java.awt.Dimension(200, 100));
+        bottomJPanel.setLayout(new java.awt.GridLayout(2, 2));
+
+        estadoJPanel.setLayout(new java.awt.GridLayout(3, 1));
+
+        malJPanel.setLayout(new java.awt.GridLayout());
+
+        malJLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        malJLabel.setForeground(new java.awt.Color(255, 0, 0));
+        malJLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        malJPanel.add(malJLabel);
+
+        estadoJPanel.add(malJPanel);
+
+        existenJPanel.setLayout(new java.awt.GridLayout());
+
+        existenJLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        existenJLabel.setForeground(new java.awt.Color(204, 153, 0));
+        existenJLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        existenJPanel.add(existenJLabel);
+
+        estadoJPanel.add(existenJPanel);
+
+        bienJPanel.setLayout(new java.awt.GridLayout());
+
+        bienJLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        bienJLabel.setForeground(new java.awt.Color(0, 153, 0));
+        bienJLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        bienJPanel.add(bienJLabel);
+
+        estadoJPanel.add(bienJPanel);
+
+        bottomJPanel.add(estadoJPanel);
+
+        palabraJTextField.setPreferredSize(new java.awt.Dimension(120, 23));
+        inputJPanel.add(palabraJTextField);
+
+        enviarJButton.setText("Enviar");
+        inputJPanel.add(enviarJButton);
+
+        bottomJPanel.add(inputJPanel);
+
+        exitoJPanel.setLayout(new java.awt.GridBagLayout());
+
+        finalJLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        finalJLabel.setForeground(new java.awt.Color(51, 153, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 99, 18, 99);
+        exitoJPanel.add(finalJLabel, gridBagConstraints);
+
+        bottomJPanel.add(exitoJPanel);
+
+        errorJPanel.setLayout(new java.awt.GridBagLayout());
+
+        errorJLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        errorJLabel.setForeground(new java.awt.Color(255, 0, 0));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(18, 106, 18, 107);
+        errorJPanel.add(errorJLabel, gridBagConstraints);
+
+        bottomJPanel.add(errorJPanel);
 
         mainJPanel.add(bottomJPanel, java.awt.BorderLayout.PAGE_END);
 
@@ -241,7 +317,7 @@ public class MainGUI extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
+            .addComponent(mainJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -283,7 +359,18 @@ public class MainGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel bienJLabel;
+    private javax.swing.JPanel bienJPanel;
     private javax.swing.JPanel bottomJPanel;
+    private javax.swing.JButton enviarJButton;
+    private javax.swing.JLabel errorJLabel;
+    private javax.swing.JPanel errorJPanel;
+    private javax.swing.JPanel estadoJPanel;
+    private javax.swing.JLabel existenJLabel;
+    private javax.swing.JPanel existenJPanel;
+    private javax.swing.JPanel exitoJPanel;
+    private javax.swing.JLabel finalJLabel;
+    private javax.swing.JPanel inputJPanel;
     private javax.swing.JLabel jLabel1_1;
     private javax.swing.JLabel jLabel1_2;
     private javax.swing.JLabel jLabel1_3;
@@ -316,5 +403,8 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6_5;
     private javax.swing.JPanel letrasJPanel;
     private javax.swing.JPanel mainJPanel;
+    private javax.swing.JLabel malJLabel;
+    private javax.swing.JPanel malJPanel;
+    private javax.swing.JTextField palabraJTextField;
     // End of variables declaration//GEN-END:variables
 }
