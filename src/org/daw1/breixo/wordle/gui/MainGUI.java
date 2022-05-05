@@ -5,6 +5,10 @@
  */
 package org.daw1.breixo.wordle.gui;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JLabel;
+
 /**
  *
  * @author Breixo
@@ -14,12 +18,71 @@ public class MainGUI extends javax.swing.JFrame {
     private static final java.awt.Color COLOR_VERDE = new java.awt.Color(0, 153, 0);
     private static final java.awt.Color COLOR_AMARILLO = new java.awt.Color(204, 153, 0);
     private static final java.awt.Color COLOR_ROJO = new java.awt.Color(255, 0, 0);
-
+    
+    private static final int MAX_INTENTOS = 6;
+    private static final int TAMANHO_PALABRA = 5;
+    
+    private final javax.swing.JLabel [][] matrizLabels = new javax.swing.JLabel [MAX_INTENTOS][TAMANHO_PALABRA];
+    
+    
     /**
      * Creates new form MainGUI
      */
     public MainGUI() {
         initComponents();
+        inicializarLabels();
+        ocultarLabels();
+        colorearLabel(1,3,COLOR_VERDE);
+    }
+    
+    
+    
+    //*** Con este método podemos colorear un laber que escojamos a nuestro gusto ***
+    public void colorearLabel(int fila,int posicion ,java.awt.Color color){
+    
+        JLabel[] filaLabels = matrizLabels[fila];//primero escogemos la fila
+            
+        JLabel jLabel = filaLabels[posicion];//segundo escogemos el Label que queremos colorear
+        
+        jLabel.setForeground(color);//ponemos el color al Label
+        
+        jLabel.setVisible(true);
+    }
+    
+    //*** Con este método lo que conseguimos es que desaparezcan las A de los labels y queden ocultas ***
+    public void ocultarLabels(){
+    
+        for (int i = 0; i < matrizLabels.length; i++) {
+            JLabel[] filaLabels = matrizLabels[i];
+            
+            for (int j = 0; j < filaLabels.length; j++) {
+                JLabel jLabel = filaLabels[j];
+                jLabel.setVisible(false);
+            }
+        }
+    }
+    
+    
+    //*** Con este método lo que conseguimos es meter todas las labels en la misma matriz ***
+    public final void inicializarLabels(){
+    
+        for (int i = 1; i <= MAX_INTENTOS; i++) {
+            
+            for (int j = 1; j <= TAMANHO_PALABRA; j++) {
+                
+                try {
+                    String nombreLabel = "jLabel" + i + "_" + j;
+                    System.out.println(nombreLabel);
+                    
+                    javax.swing.JLabel aux = (javax.swing.JLabel)this.getClass().getDeclaredField(nombreLabel).get(this);
+                    matrizLabels[i - 1][j - 1] = aux;
+                    
+                } catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException ex) {
+                    Logger.getLogger(MainGUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            }
+        }
     }
 
     /**
