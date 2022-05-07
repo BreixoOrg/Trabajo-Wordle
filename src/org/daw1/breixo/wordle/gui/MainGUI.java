@@ -142,12 +142,17 @@ public class MainGUI extends javax.swing.JFrame {
         finalJLabel = new javax.swing.JLabel();
         errorJPanel = new javax.swing.JPanel();
         errorJLabel = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("DAW1 Wordle Breixo");
 
+        mainJPanel.setBackground(new java.awt.Color(255, 255, 255));
         mainJPanel.setLayout(new java.awt.BorderLayout());
 
+        letrasJPanel.setBackground(new java.awt.Color(255, 255, 255));
         letrasJPanel.setLayout(new java.awt.GridLayout(6, 5));
 
         jLabel1_1.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
@@ -302,12 +307,15 @@ public class MainGUI extends javax.swing.JFrame {
 
         mainJPanel.add(letrasJPanel, java.awt.BorderLayout.CENTER);
 
+        bottomJPanel.setBackground(new java.awt.Color(255, 255, 255));
         bottomJPanel.setPreferredSize(new java.awt.Dimension(200, 100));
         bottomJPanel.setLayout(new java.awt.GridLayout(2, 2));
 
+        estadoJPanel.setBackground(new java.awt.Color(255, 255, 255));
         estadoJPanel.setLayout(new java.awt.GridLayout(3, 1));
 
-        malJPanel.setLayout(new java.awt.GridLayout());
+        malJPanel.setBackground(new java.awt.Color(255, 255, 255));
+        malJPanel.setLayout(new java.awt.GridLayout(1, 0));
 
         malJLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         malJLabel.setForeground(new java.awt.Color(255, 0, 0));
@@ -316,7 +324,8 @@ public class MainGUI extends javax.swing.JFrame {
 
         estadoJPanel.add(malJPanel);
 
-        existenJPanel.setLayout(new java.awt.GridLayout());
+        existenJPanel.setBackground(new java.awt.Color(255, 255, 255));
+        existenJPanel.setLayout(new java.awt.GridLayout(1, 0));
 
         existenJLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         existenJLabel.setForeground(new java.awt.Color(204, 153, 0));
@@ -325,7 +334,8 @@ public class MainGUI extends javax.swing.JFrame {
 
         estadoJPanel.add(existenJPanel);
 
-        bienJPanel.setLayout(new java.awt.GridLayout());
+        bienJPanel.setBackground(new java.awt.Color(255, 255, 255));
+        bienJPanel.setLayout(new java.awt.GridLayout(1, 0));
 
         bienJLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         bienJLabel.setForeground(new java.awt.Color(0, 153, 0));
@@ -336,6 +346,8 @@ public class MainGUI extends javax.swing.JFrame {
 
         bottomJPanel.add(estadoJPanel);
 
+        inputJPanel.setBackground(new java.awt.Color(255, 255, 255));
+
         palabraJTextField.setPreferredSize(new java.awt.Dimension(120, 23));
         inputJPanel.add(palabraJTextField);
 
@@ -344,6 +356,7 @@ public class MainGUI extends javax.swing.JFrame {
 
         bottomJPanel.add(inputJPanel);
 
+        exitoJPanel.setBackground(new java.awt.Color(255, 255, 255));
         exitoJPanel.setLayout(new java.awt.GridBagLayout());
 
         finalJLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -357,6 +370,7 @@ public class MainGUI extends javax.swing.JFrame {
 
         bottomJPanel.add(exitoJPanel);
 
+        errorJPanel.setBackground(new java.awt.Color(255, 255, 255));
         errorJPanel.setLayout(new java.awt.GridBagLayout());
 
         errorJLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
@@ -372,6 +386,14 @@ public class MainGUI extends javax.swing.JFrame {
 
         mainJPanel.add(bottomJPanel, java.awt.BorderLayout.PAGE_END);
 
+        jMenu1.setText("File");
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -380,7 +402,7 @@ public class MainGUI extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(mainJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
         );
 
         pack();
@@ -464,6 +486,9 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6_3;
     private javax.swing.JLabel jLabel6_4;
     private javax.swing.JLabel jLabel6_5;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel letrasJPanel;
     private javax.swing.JPanel mainJPanel;
     private javax.swing.JLabel malJLabel;
