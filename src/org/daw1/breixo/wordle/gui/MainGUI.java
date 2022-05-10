@@ -5,6 +5,7 @@
  */
 package org.daw1.breixo.wordle.gui;
 
+import org.daw1.breixo.Verificadores.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
@@ -24,15 +25,17 @@ public class MainGUI extends javax.swing.JFrame {
     
     private final javax.swing.JLabel [][] matrizLabels = new javax.swing.JLabel [MAX_INTENTOS][TAMANHO_PALABRA];
     
+    private static IVerificador verificador;
+    
     
     /**
      * Creates new form MainGUI
      */
     public MainGUI() {
+        verificador = new VerificadorTXT();
         initComponents();
         inicializarLabels();
         ocultarLabels();
-        colorearLabel(1,3,COLOR_VERDE);
     }
     
     
@@ -46,7 +49,7 @@ public class MainGUI extends javax.swing.JFrame {
         
         jLabel.setForeground(color);//ponemos el color al Label
         
-        jLabel.setVisible(true);
+        jLabel.setVisible(true);// lo ponemos visible
     }
     
     //*** Con este método lo que conseguimos es que desaparezcan las A de los labels y queden ocultas ***
