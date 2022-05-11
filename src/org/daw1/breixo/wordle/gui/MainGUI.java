@@ -5,10 +5,10 @@
  */
 package org.daw1.breixo.wordle.gui;
 
-import org.daw1.breixo.Verificadores.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
+import org.daw1.breixo.GestorFicheros.*;
 
 /**
  *
@@ -25,14 +25,12 @@ public class MainGUI extends javax.swing.JFrame {
     
     private final javax.swing.JLabel [][] matrizLabels = new javax.swing.JLabel [MAX_INTENTOS][TAMANHO_PALABRA];
     
-    private static IVerificador verificador;
-    
+    private static IGestorFicheros gf;
     
     /**
      * Creates new form MainGUI
      */
     public MainGUI() {
-        verificador = new VerificadorTXT();
         initComponents();
         inicializarLabels();
         ocultarLabels();

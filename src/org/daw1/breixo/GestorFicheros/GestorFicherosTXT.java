@@ -5,25 +5,158 @@
  */
 package org.daw1.breixo.GestorFicheros;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
+import java.nio.file.Path;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Breixo
  */
-public class GestorFicherosTXT implements IGestorFicheros{
+
+
+public class GestorFicherosTXT implements IGestorFicheros {
+
+    java.util.Set<String> setPalabras = new java.util.HashSet<>();
+
+    File FICHERO = new File(Path.of(".") + File.separator + "data" + File.separator + "palabras.txt");
 
     @Override
     public String cargarPalabraAleatoria() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        if (!FICHERO.exists()) {
+            crearFichero();
+        }
+
+        cargarPalabrasEnSet();
+
+        String palabra = "";
+
+        java.util.Random genNum = new java.util.Random();
+
+        Iterator it = setPalabras.iterator();
+
+        int numPalabraSeleccionada = genNum.nextInt(setPalabras.size());
+        int contador = 0;
+
+        while (contador <= numPalabraSeleccionada) {
+            palabra = (String) it.next();
+        }
+
+        return palabra;
     }
 
     @Override
     public boolean guardarPalabra(String palabra) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        palabra = palabra.toLowerCase().trim();
+
+        if (checkPalabra(palabra)) {
+
+            if (!FICHERO.exists()) {
+                crearFichero();
+            }
+
+            try (Writer wr = new BufferedWriter(new FileWriter(FICHERO))) {
+                wr.write(palabra);
+                return true;
+            } catch (IOException ex) {
+                Logger.getLogger(GestorFicherosTXT.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        return false;
+
     }
 
     @Override
     public boolean eliminarPalabra(String palabra) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+        palabra = palabra.toLowerCase().trim();
+
+        if (checkPalabra(palabra)) {
+
+            if (!FICHERO.exists()) {
+                crearFichero();
+            }
+
+            cargarPalabrasEnSet();
+
+            if (setPalabras.contains(palabra)) {
+
+                if (setPalabras.remove(palabra)) {
+                    return true;
+                }
+
+            }
+        }
+
+        return false;
+
     }
-    
+
+    @Override
+    public int comprobarCaracter(int posicion, String palabraProg, String palabraUser) {
+
+        char letra = palabraUser.charAt(posicion - 1);
+
+        if (palabraProg.contains(letra + "")) {
+
+            if (palabraProg.charAt(posicion - 1) == letra) {
+                return 1;
+            }
+
+            return 0;
+        } else {
+            return -1;
+        }
+
+    }
+
+    public boolean cargarPalabrasEnSet() {
+
+        try (BufferedReader br = new BufferedReader(new FileReader(FICHERO))) {
+            String linea = br.readLine();
+            while (linea != null) {
+                setPalabras.add(linea);
+                linea = br.readLine();
+            }
+            return true;
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(GestorFicherosTXT.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(GestorFicherosTXT.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public void crearFichero() {
+
+        FICHERO.getParentFile().mkdirs();
+        try {
+            FICHERO.createNewFile();
+        } catch (IOException ex) {
+            Logger.getLogger(GestorFicherosTXT.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public boolean checkPalabra(String palabra) {
+
+        if (palabra.matches("[^a-z]{5}")) {
+            return false;
+        }
+        return true;
+
+    }
+
 }

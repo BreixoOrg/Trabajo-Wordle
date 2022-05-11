@@ -17,4 +17,14 @@ public abstract interface IGestorFicheros {
     
     public boolean eliminarPalabra(String palabra);
     
+    /**
+     * 
+     * @param posicion Posición de la letra. Empieza en 1
+     * @param palabraProg Palabra del programa
+     * @param palabraUser Palabra del usuario
+     * @return Devuelve un int. 1 si está bien, 0 si se encuentra en la palabra pero mal posicionada y -1 si no existe la letra
+     */
+    
+    public int comprobarCaracter(int  posicion, String palabraProg, String palabraUser);
+    
 }
