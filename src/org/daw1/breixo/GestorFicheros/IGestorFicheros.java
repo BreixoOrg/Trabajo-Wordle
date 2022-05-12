@@ -19,7 +19,7 @@ public abstract interface IGestorFicheros {
     
     /**
      * 
-     * @param posicion Posición de la letra. Empieza en 1
+     * @param posicion Posición de la letra. Empieza en 0
      * @param palabraProg Palabra del programa
      * @param palabraUser Palabra del usuario
      * @return Devuelve un int. 1 si está bien, 0 si se encuentra en la palabra pero mal posicionada y -1 si no existe la letra

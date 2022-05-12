@@ -107,11 +107,11 @@ public class GestorFicherosTXT implements IGestorFicheros {
     @Override
     public int comprobarCaracter(int posicion, String palabraProg, String palabraUser) {
 
-        char letra = palabraUser.charAt(posicion - 1);
+        char letra = palabraUser.charAt(posicion);
 
         if (palabraProg.contains(letra + "")) {
 
-            if (palabraProg.charAt(posicion - 1) == letra) {
+            if (palabraProg.charAt(posicion) == letra) {
                 return 1;
             }
 
@@ -122,7 +122,7 @@ public class GestorFicherosTXT implements IGestorFicheros {
 
     }
 
-    public boolean cargarPalabrasEnSet() {
+    private boolean cargarPalabrasEnSet() {
 
         try (BufferedReader br = new BufferedReader(new FileReader(FICHERO))) {
             String linea = br.readLine();
@@ -139,7 +139,7 @@ public class GestorFicherosTXT implements IGestorFicheros {
         return false;
     }
 
-    public void crearFichero() {
+    private void crearFichero() {
 
         FICHERO.getParentFile().mkdirs();
         try {
@@ -150,7 +150,7 @@ public class GestorFicherosTXT implements IGestorFicheros {
 
     }
 
-    public boolean checkPalabra(String palabra) {
+    private boolean checkPalabra(String palabra) {
 
         if (palabra.matches("[^a-z]{5}")) {
             return false;

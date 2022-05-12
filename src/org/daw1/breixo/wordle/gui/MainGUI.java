@@ -27,25 +27,38 @@ public class MainGUI extends javax.swing.JFrame {
     
     private static IGestorFicheros gf;
     
+    private static int INTENTOS_EN_PARTIDA;
+    private String palabraAdivinar;
+    
     /**
      * Creates new form MainGUI
      */
     public MainGUI() {
+        gf = new GestorFicherosTXT();
         initComponents();
         inicializarLabels();
         ocultarLabels();
+        
+        INTENTOS_EN_PARTIDA=0;
+        //palabraAdivinar = gf.cargarPalabraAleatoria();
+        palabraAdivinar = "ciclo";
+        
+        
+        
     }
     
     
     
     //*** Con este método podemos colorear un laber que escojamos a nuestro gusto ***
-    public void colorearLabel(int fila,int posicion ,java.awt.Color color){
+    public void colorearLabelYPonerLetra(int fila,int posicion ,java.awt.Color color,String letra){
     
         JLabel[] filaLabels = matrizLabels[fila];//primero escogemos la fila
             
         JLabel jLabel = filaLabels[posicion];//segundo escogemos el Label que queremos colorear
         
         jLabel.setForeground(color);//ponemos el color al Label
+        
+        jLabel.setText(letra);
         
         jLabel.setVisible(true);// lo ponemos visible
     }
@@ -73,7 +86,7 @@ public class MainGUI extends javax.swing.JFrame {
                 
                 try {
                     String nombreLabel = "jLabel" + i + "_" + j;
-                    System.out.println(nombreLabel);
+                    //System.out.println(nombreLabel);
                     
                     javax.swing.JLabel aux = (javax.swing.JLabel)this.getClass().getDeclaredField(nombreLabel).get(this);
                     matrizLabels[i - 1][j - 1] = aux;
@@ -96,6 +109,7 @@ public class MainGUI extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
+        modosDeJuegobuttonGroup = new javax.swing.ButtonGroup();
         mainJPanel = new javax.swing.JPanel();
         letrasJPanel = new javax.swing.JPanel();
         jLabel1_1 = new javax.swing.JLabel();
@@ -143,9 +157,11 @@ public class MainGUI extends javax.swing.JFrame {
         finalJLabel = new javax.swing.JLabel();
         errorJPanel = new javax.swing.JPanel();
         errorJLabel = new javax.swing.JLabel();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
+        mainjMenuBar = new javax.swing.JMenuBar();
+        modoDeJuegojMenu = new javax.swing.JMenu();
+        ficheroDeTextojRadioButtonMenuItem = new javax.swing.JRadioButtonMenuItem();
+        baseDeDatosjRadioButtonMenuItem = new javax.swing.JRadioButtonMenuItem();
+        reiniciarjMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("DAW1 Wordle Breixo");
@@ -353,6 +369,11 @@ public class MainGUI extends javax.swing.JFrame {
         inputJPanel.add(palabraJTextField);
 
         enviarJButton.setText("Enviar");
+        enviarJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                enviarJButtonActionPerformed(evt);
+            }
+        });
         inputJPanel.add(enviarJButton);
 
         bottomJPanel.add(inputJPanel);
@@ -387,13 +408,33 @@ public class MainGUI extends javax.swing.JFrame {
 
         mainJPanel.add(bottomJPanel, java.awt.BorderLayout.PAGE_END);
 
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
+        modoDeJuegojMenu.setText("Modos de Juego");
 
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
+        modosDeJuegobuttonGroup.add(ficheroDeTextojRadioButtonMenuItem);
+        ficheroDeTextojRadioButtonMenuItem.setSelected(true);
+        ficheroDeTextojRadioButtonMenuItem.setText("Fichero de texto");
+        ficheroDeTextojRadioButtonMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ficheroDeTextojRadioButtonMenuItemActionPerformed(evt);
+            }
+        });
+        modoDeJuegojMenu.add(ficheroDeTextojRadioButtonMenuItem);
 
-        setJMenuBar(jMenuBar1);
+        modosDeJuegobuttonGroup.add(baseDeDatosjRadioButtonMenuItem);
+        baseDeDatosjRadioButtonMenuItem.setText("Base de datos");
+        baseDeDatosjRadioButtonMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                baseDeDatosjRadioButtonMenuItemActionPerformed(evt);
+            }
+        });
+        modoDeJuegojMenu.add(baseDeDatosjRadioButtonMenuItem);
+
+        mainjMenuBar.add(modoDeJuegojMenu);
+
+        reiniciarjMenu.setText("Reiniciar");
+        mainjMenuBar.add(reiniciarjMenu);
+
+        setJMenuBar(mainjMenuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -409,6 +450,51 @@ public class MainGUI extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void ficheroDeTextojRadioButtonMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ficheroDeTextojRadioButtonMenuItemActionPerformed
+        seleccionarConversor();
+    }//GEN-LAST:event_ficheroDeTextojRadioButtonMenuItemActionPerformed
+
+    private void baseDeDatosjRadioButtonMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_baseDeDatosjRadioButtonMenuItemActionPerformed
+        seleccionarConversor();
+    }//GEN-LAST:event_baseDeDatosjRadioButtonMenuItemActionPerformed
+
+    private void enviarJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarJButtonActionPerformed
+        
+        String palabra = this.palabraJTextField.getText().toLowerCase();
+        java.awt.Color colorearDe;
+        
+        for (int i = 0; i < TAMANHO_PALABRA; i++) {
+            int printColor = gf.comprobarCaracter(i, palabraAdivinar, palabra);
+            
+            if(printColor == 1){
+                colorearDe = COLOR_VERDE;
+            }
+            else if(printColor == 0){
+                colorearDe = COLOR_AMARILLO;
+            }
+            else{
+                colorearDe = COLOR_ROJO;
+            }
+            
+            String ponerLetra = palabra.substring(0 + i, 1 + i).toUpperCase();
+            
+            colorearLabelYPonerLetra(INTENTOS_EN_PARTIDA,i ,colorearDe,ponerLetra);
+        }
+        INTENTOS_EN_PARTIDA++;
+        
+    }//GEN-LAST:event_enviarJButtonActionPerformed
+
+    private void seleccionarConversor(){
+    
+        if(this.ficheroDeTextojRadioButtonMenuItem.isSelected()){
+            gf = new GestorFicherosTXT();
+        }
+        else if(this.baseDeDatosjRadioButtonMenuItem.isSelected()){
+            gf = new GestorFicherosBaseDatos();
+        }
+    
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -445,6 +531,7 @@ public class MainGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButtonMenuItem baseDeDatosjRadioButtonMenuItem;
     private javax.swing.JLabel bienJLabel;
     private javax.swing.JPanel bienJPanel;
     private javax.swing.JPanel bottomJPanel;
@@ -455,6 +542,7 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JLabel existenJLabel;
     private javax.swing.JPanel existenJPanel;
     private javax.swing.JPanel exitoJPanel;
+    private javax.swing.JRadioButtonMenuItem ficheroDeTextojRadioButtonMenuItem;
     private javax.swing.JLabel finalJLabel;
     private javax.swing.JPanel inputJPanel;
     private javax.swing.JLabel jLabel1_1;
@@ -487,13 +575,14 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6_3;
     private javax.swing.JLabel jLabel6_4;
     private javax.swing.JLabel jLabel6_5;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel letrasJPanel;
     private javax.swing.JPanel mainJPanel;
+    private javax.swing.JMenuBar mainjMenuBar;
     private javax.swing.JLabel malJLabel;
     private javax.swing.JPanel malJPanel;
+    private javax.swing.JMenu modoDeJuegojMenu;
+    private javax.swing.ButtonGroup modosDeJuegobuttonGroup;
     private javax.swing.JTextField palabraJTextField;
+    private javax.swing.JMenu reiniciarjMenu;
     // End of variables declaration//GEN-END:variables
 }
