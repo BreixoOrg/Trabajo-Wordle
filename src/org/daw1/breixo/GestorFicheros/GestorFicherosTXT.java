@@ -24,7 +24,7 @@ import java.util.logging.Logger;
  */
 
 
-public class GestorFicherosTXT implements IGestorFicheros {
+public class GestorFicherosTXT implements IGestorDatos {
 
     java.util.Set<String> setPalabras = new java.util.HashSet<>();
 

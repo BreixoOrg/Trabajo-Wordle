@@ -9,7 +9,7 @@ package org.daw1.breixo.GestorFicheros;
  *
  * @author Breixo
  */
-public abstract interface IGestorFicheros {
+public abstract interface IGestorDatos {
     
     public String cargarPalabraAleatoria();
     

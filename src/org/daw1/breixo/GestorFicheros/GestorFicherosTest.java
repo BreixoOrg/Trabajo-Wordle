@@ -9,26 +9,37 @@ package org.daw1.breixo.GestorFicheros;
  *
  * @author Breixo
  */
-public class GestorFicherosBaseDatos implements IGestorDatos{
+public class GestorFicherosTest implements IGestorDatos{
 
     @Override
     public String cargarPalabraAleatoria() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return "ciclo";
     }
 
     @Override
     public boolean guardarPalabra(String palabra) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return true;
     }
 
     @Override
     public boolean eliminarPalabra(String palabra) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return true;
     }
 
     @Override
     public int comprobarCaracter(int posicion, String palabraProg, String palabraUser) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        char letra = palabraUser.charAt(posicion);
+
+        if (palabraProg.contains(letra + "")) {
+
+            if (palabraProg.charAt(posicion) == letra) {
+                return 1;
+            }
+
+            return 0;
+        } else {
+            return -1;
+        }
     }
     
 }
