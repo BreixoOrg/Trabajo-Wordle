@@ -5,6 +5,8 @@
  */
 package org.daw1.breixo.wordle.gui;
 
+import java.io.File;
+import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
@@ -24,6 +26,12 @@ public class MainGUI extends javax.swing.JFrame {
     private static java.util.Set<String> letrasEnAmarillo = new java.util.HashSet<>();
     private static java.util.Set<String> letrasEnRojo = new java.util.HashSet<>();
     
+    private static File FICHERO = new File(Path.of(".") + File.separator + "data" + File.separator + "palabras.txt");
+    private static File FICHERO_TXT = new File(Path.of(".") + File.separator + "data" + File.separator + "palabras.txt");
+    /*
+    Esta será la ruta del fichero de la base de datos
+    private static File FICHERO_TXT = new File(Path.of(".") + File.separator + "data" + File.separator + "palabras.txt");
+    */
     private static final int MAX_INTENTOS = 6;
     private static final int TAMANHO_PALABRA = 5;
     private static final String CADENA_VACIA = "";
@@ -39,12 +47,12 @@ public class MainGUI extends javax.swing.JFrame {
      * Creates new form MainGUI
      */
     public MainGUI() {
-        //gf = new GestorFicherosTXT();
-        gf = new GestorFicherosTest();
+        
+        //gf = new GestorFicherosTest();
         initComponents();
         inicializarLabels();
         ocultarLabels();
-        
+        gf = new GestorFicherosTXT(FICHERO);
         INTENTOS_EN_PARTIDA=0;
         palabraAdivinar = gf.cargarPalabraAleatoria();
         
@@ -129,23 +137,6 @@ public class MainGUI extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         modosDeJuegobuttonGroup = new javax.swing.ButtonGroup();
-        anhadirQuitarPalabrasjDialog = new javax.swing.JDialog();
-        mainjPanel = new javax.swing.JPanel();
-        titulojPanel = new javax.swing.JPanel();
-        tituloTitlejLabel = new javax.swing.JLabel();
-        cuerpojPanel = new javax.swing.JPanel();
-        contenedorAnhadirjPanel = new javax.swing.JPanel();
-        anhadirjPanel = new javax.swing.JPanel();
-        anhadirjTextField = new javax.swing.JTextField();
-        anhadirjButton = new javax.swing.JButton();
-        mensajeAnhadirjPanel = new javax.swing.JPanel();
-        anhadirMensajejLabel = new javax.swing.JLabel();
-        contenedorEliminarjPanel = new javax.swing.JPanel();
-        eliminarjPanel = new javax.swing.JPanel();
-        eliminarjTextField = new javax.swing.JTextField();
-        eliminarjButton = new javax.swing.JButton();
-        mensajeEliminarjPanel = new javax.swing.JPanel();
-        eliminarMensajejLabel = new javax.swing.JLabel();
         mainJPanel = new javax.swing.JPanel();
         letrasJPanel = new javax.swing.JPanel();
         jLabel1_1 = new javax.swing.JLabel();
@@ -200,90 +191,6 @@ public class MainGUI extends javax.swing.JFrame {
         baseDeDatosENjRadioButtonMenuItem = new javax.swing.JRadioButtonMenuItem();
         anhadirEliminarPalabrasjMenuItem = new javax.swing.JMenuItem();
         reiniciarMenuItem = new javax.swing.JMenuItem();
-
-        anhadirQuitarPalabrasjDialog.setResizable(false);
-
-        mainjPanel.setLayout(new java.awt.BorderLayout());
-
-        titulojPanel.setLayout(new java.awt.GridBagLayout());
-
-        tituloTitlejLabel.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
-        tituloTitlejLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        tituloTitlejLabel.setText("GESTIÓN MOTOR");
-        tituloTitlejLabel.setToolTipText("");
-        titulojPanel.add(tituloTitlejLabel, new java.awt.GridBagConstraints());
-
-        mainjPanel.add(titulojPanel, java.awt.BorderLayout.PAGE_START);
-
-        cuerpojPanel.setLayout(new java.awt.GridLayout(2, 0));
-
-        contenedorAnhadirjPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Alta palabra", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Dialog", 1, 12))); // NOI18N
-        contenedorAnhadirjPanel.setLayout(new java.awt.GridLayout(2, 0));
-
-        anhadirjTextField.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        anhadirjTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        anhadirjTextField.setPreferredSize(new java.awt.Dimension(160, 23));
-        anhadirjPanel.add(anhadirjTextField);
-
-        anhadirjButton.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        anhadirjButton.setText("Añadir");
-        anhadirjButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                anhadirjButtonActionPerformed(evt);
-            }
-        });
-        anhadirjPanel.add(anhadirjButton);
-
-        contenedorAnhadirjPanel.add(anhadirjPanel);
-
-        mensajeAnhadirjPanel.setLayout(new java.awt.GridBagLayout());
-
-        anhadirMensajejLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        mensajeAnhadirjPanel.add(anhadirMensajejLabel, new java.awt.GridBagConstraints());
-
-        contenedorAnhadirjPanel.add(mensajeAnhadirjPanel);
-
-        cuerpojPanel.add(contenedorAnhadirjPanel);
-
-        contenedorEliminarjPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Borrado Palabra", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12))); // NOI18N
-        contenedorEliminarjPanel.setLayout(new java.awt.GridLayout(2, 0));
-
-        eliminarjTextField.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        eliminarjTextField.setPreferredSize(new java.awt.Dimension(160, 23));
-        eliminarjPanel.add(eliminarjTextField);
-
-        eliminarjButton.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        eliminarjButton.setText("Borrar");
-        eliminarjButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                eliminarjButtonActionPerformed(evt);
-            }
-        });
-        eliminarjPanel.add(eliminarjButton);
-
-        contenedorEliminarjPanel.add(eliminarjPanel);
-
-        mensajeEliminarjPanel.setLayout(new java.awt.GridBagLayout());
-
-        eliminarMensajejLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        mensajeEliminarjPanel.add(eliminarMensajejLabel, new java.awt.GridBagConstraints());
-
-        contenedorEliminarjPanel.add(mensajeEliminarjPanel);
-
-        cuerpojPanel.add(contenedorEliminarjPanel);
-
-        mainjPanel.add(cuerpojPanel, java.awt.BorderLayout.CENTER);
-
-        javax.swing.GroupLayout anhadirQuitarPalabrasjDialogLayout = new javax.swing.GroupLayout(anhadirQuitarPalabrasjDialog.getContentPane());
-        anhadirQuitarPalabrasjDialog.getContentPane().setLayout(anhadirQuitarPalabrasjDialogLayout);
-        anhadirQuitarPalabrasjDialogLayout.setHorizontalGroup(
-            anhadirQuitarPalabrasjDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainjPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
-        );
-        anhadirQuitarPalabrasjDialogLayout.setVerticalGroup(
-            anhadirQuitarPalabrasjDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainjPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("DAW1 Wordle Breixo");
@@ -666,48 +573,6 @@ public class MainGUI extends javax.swing.JFrame {
         
     }//GEN-LAST:event_reiniciarMenuItemActionPerformed
 
-    private void anhadirjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anhadirjButtonActionPerformed
-        // TODO add your handling code here:
-        
-        String palabraAnhadir = this.anhadirjTextField.getText().toLowerCase();
-        
-        if(palabraAnhadir.length() == TAMANHO_PALABRA){
-            
-            if(gf.guardarPalabra(palabraAnhadir)){
-                this.anhadirMensajejLabel.setText("La palabra se añadió correctamente");
-            }
-            else{
-                this.anhadirMensajejLabel.setText("La palabra insertada ya existe");
-            }
-        
-        }
-        else{
-            this.anhadirMensajejLabel.setText("La palabra a insertar solo puede llevar " + TAMANHO_PALABRA + " letras");
-        }
-        
-    }//GEN-LAST:event_anhadirjButtonActionPerformed
-
-    private void eliminarjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarjButtonActionPerformed
-        // TODO add your handling code here:
-        
-        String palabraEliminar = this.anhadirjTextField.getText().toLowerCase();
-        
-        if(palabraEliminar.length() == TAMANHO_PALABRA){
-            
-            if(gf.eliminarPalabra(palabraEliminar)){
-                this.eliminarMensajejLabel.setText("La palabra se eliminó correctamente");
-            }
-            else{
-                this.eliminarMensajejLabel.setText("La palabra insertada no existe");
-            }
-        
-        }
-        else{
-            this.eliminarMensajejLabel.setText("La palabra a insertar solo puede llevar " + TAMANHO_PALABRA + " letras");
-        }
-        
-    }//GEN-LAST:event_eliminarjButtonActionPerformed
-
     private void anhadirEliminarPalabrasjMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anhadirEliminarPalabrasjMenuItemActionPerformed
         // TODO add your handling code here:
         
@@ -747,9 +612,11 @@ public class MainGUI extends javax.swing.JFrame {
     private void seleccionarConversor(){
     
         if(this.ficheroDeTextojRadioButtonMenuItem.isSelected()){
-            gf = new GestorFicherosTXT();
+            FICHERO = FICHERO_TXT;
+            gf = new GestorFicherosTXT(FICHERO);
         }
         else if(this.baseDeDatosESjRadioButtonMenuItem.isSelected()){
+            /*FICHERO = FICHERO_;*/
             gf = new GestorFicherosBaseDatos();
         }
     
@@ -792,23 +659,11 @@ public class MainGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem anhadirEliminarPalabrasjMenuItem;
-    private javax.swing.JLabel anhadirMensajejLabel;
-    private javax.swing.JDialog anhadirQuitarPalabrasjDialog;
-    private javax.swing.JButton anhadirjButton;
-    private javax.swing.JPanel anhadirjPanel;
-    private javax.swing.JTextField anhadirjTextField;
     private javax.swing.JRadioButtonMenuItem baseDeDatosENjRadioButtonMenuItem;
     private javax.swing.JRadioButtonMenuItem baseDeDatosESjRadioButtonMenuItem;
     private javax.swing.JLabel bienJLabel;
     private javax.swing.JPanel bienJPanel;
     private javax.swing.JPanel bottomJPanel;
-    private javax.swing.JPanel contenedorAnhadirjPanel;
-    private javax.swing.JPanel contenedorEliminarjPanel;
-    private javax.swing.JPanel cuerpojPanel;
-    private javax.swing.JLabel eliminarMensajejLabel;
-    private javax.swing.JButton eliminarjButton;
-    private javax.swing.JPanel eliminarjPanel;
-    private javax.swing.JTextField eliminarjTextField;
     private javax.swing.JButton enviarJButton;
     private javax.swing.JLabel errorJLabel;
     private javax.swing.JPanel errorJPanel;
@@ -852,16 +707,11 @@ public class MainGUI extends javax.swing.JFrame {
     private javax.swing.JPanel letrasJPanel;
     private javax.swing.JPanel mainJPanel;
     private javax.swing.JMenuBar mainjMenuBar;
-    private javax.swing.JPanel mainjPanel;
     private javax.swing.JLabel malJLabel;
     private javax.swing.JPanel malJPanel;
-    private javax.swing.JPanel mensajeAnhadirjPanel;
-    private javax.swing.JPanel mensajeEliminarjPanel;
     private javax.swing.JMenu modoDeJuegojMenu;
     private javax.swing.ButtonGroup modosDeJuegobuttonGroup;
     private javax.swing.JTextField palabraJTextField;
     private javax.swing.JMenuItem reiniciarMenuItem;
-    private javax.swing.JLabel tituloTitlejLabel;
-    private javax.swing.JPanel titulojPanel;
     // End of variables declaration//GEN-END:variables
 }
