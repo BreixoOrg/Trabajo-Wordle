@@ -26,9 +26,15 @@ import java.util.logging.Logger;
 
 public class GestorFicherosTXT implements IGestorDatos {
 
-    java.util.Set<String> setPalabras = new java.util.HashSet<>();
+    private java.util.Set<String> setPalabras = new java.util.HashSet<>();
 
-    File FICHERO = new File(Path.of(".") + File.separator + "data" + File.separator + "palabras.txt");
+    private static File FICHERO;
+
+    public GestorFicherosTXT(File fichero) {
+        FICHERO = fichero;
+    }
+    
+    
 
     @Override
     public String cargarPalabraAleatoria() {
@@ -37,7 +43,7 @@ public class GestorFicherosTXT implements IGestorDatos {
             crearFichero();
         }
 
-        cargarPalabrasEnSet();
+        cargarPalabrasFileToSet();
 
         String palabra = "";
 
@@ -50,6 +56,7 @@ public class GestorFicherosTXT implements IGestorDatos {
 
         while (contador <= numPalabraSeleccionada) {
             palabra = (String) it.next();
+            contador++;
         }
 
         return palabra;
@@ -66,8 +73,8 @@ public class GestorFicherosTXT implements IGestorDatos {
                 crearFichero();
             }
 
-            try (Writer wr = new BufferedWriter(new FileWriter(FICHERO))) {
-                wr.write(palabra);
+            try (Writer wr = new BufferedWriter(new FileWriter(FICHERO,true))) {
+                wr.write(palabra + "\n");
                 return true;
             } catch (IOException ex) {
                 Logger.getLogger(GestorFicherosTXT.class.getName()).log(Level.SEVERE, null, ex);
@@ -80,6 +87,8 @@ public class GestorFicherosTXT implements IGestorDatos {
 
     @Override
     public boolean eliminarPalabra(String palabra) {
+        
+        cargarPalabrasFileToSet();
 
         palabra = palabra.toLowerCase().trim();
 
@@ -89,11 +98,12 @@ public class GestorFicherosTXT implements IGestorDatos {
                 crearFichero();
             }
 
-            cargarPalabrasEnSet();
+            cargarPalabrasFileToSet();
 
             if (setPalabras.contains(palabra)) {
 
                 if (setPalabras.remove(palabra)) {
+                    cargarPalabrasSetToFile();
                     return true;
                 }
 
@@ -122,7 +132,7 @@ public class GestorFicherosTXT implements IGestorDatos {
 
     }
 
-    private boolean cargarPalabrasEnSet() {
+    private boolean cargarPalabrasFileToSet() {
 
         try (BufferedReader br = new BufferedReader(new FileReader(FICHERO))) {
             String linea = br.readLine();
@@ -157,6 +167,39 @@ public class GestorFicherosTXT implements IGestorDatos {
         }
         return true;
 
+    }
+    
+    private void cargarPalabrasSetToFile(){
+    
+        if (!FICHERO.exists()) {
+                crearFichero();
+            }
+        
+        try (Writer wr = new BufferedWriter(new FileWriter(FICHERO))) {
+                wr.write("");
+            } catch (IOException ex) {
+                Logger.getLogger(GestorFicherosTXT.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+        try (Writer wr = new BufferedWriter(new FileWriter(FICHERO,true))) {
+            
+            StringBuilder sb = new StringBuilder();
+
+            Iterator it = setPalabras.iterator();
+            
+            while(it.hasNext()){
+            
+                String aux = (String) it.next();
+                
+                sb.append(aux).append("\n");
+            }
+            
+            wr.write(sb.toString());
+            
+            } catch (IOException ex) {
+                Logger.getLogger(GestorFicherosTXT.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    
     }
 
 }

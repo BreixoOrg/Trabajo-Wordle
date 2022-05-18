@@ -19,6 +19,8 @@ public class AnhadirEliminarPalabras extends javax.swing.JDialog {
     
     private static IGestorDatos gd;
     
+    private static int TAMANHO_PALABRA = 5;
+    
     public AnhadirEliminarPalabras(java.awt.Frame parent, boolean modal,IGestorDatos gf) {
         super(parent, modal);
         gd = gf;
@@ -34,43 +36,153 @@ public class AnhadirEliminarPalabras extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        mainjPanel = new javax.swing.JPanel();
+        titulojPanel = new javax.swing.JPanel();
+        titulojLabel = new javax.swing.JLabel();
+        cuerpojPanel = new javax.swing.JPanel();
+        contenedorAnhadirjPanel = new javax.swing.JPanel();
+        anhadirjPanel = new javax.swing.JPanel();
+        anhadirjTextField = new javax.swing.JTextField();
+        anhadirjButton = new javax.swing.JButton();
+        mensajeAnhadirjPanel = new javax.swing.JPanel();
+        anhadirMensajejLabel = new javax.swing.JLabel();
+        contenedorEliminarjPanel = new javax.swing.JPanel();
+        eliminarjPanel = new javax.swing.JPanel();
+        eliminarjTextField = new javax.swing.JTextField();
+        eliminarjButton = new javax.swing.JButton();
+        mensajeEliminarjPanel = new javax.swing.JPanel();
+        eliminarMensajejLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setText("jLabel1");
+        mainjPanel.setLayout(new java.awt.BorderLayout());
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(184, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(181, 181, 181))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(138, 138, 138)
-                .addComponent(jLabel1)
-                .addContainerGap(148, Short.MAX_VALUE))
-        );
+        titulojPanel.setLayout(new java.awt.GridBagLayout());
+
+        titulojLabel.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
+        titulojLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titulojLabel.setText("GESTIÓN MOTOR");
+        titulojPanel.add(titulojLabel, new java.awt.GridBagConstraints());
+
+        mainjPanel.add(titulojPanel, java.awt.BorderLayout.PAGE_START);
+
+        cuerpojPanel.setLayout(new java.awt.GridLayout(2, 0));
+
+        contenedorAnhadirjPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Alta palabra", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        contenedorAnhadirjPanel.setLayout(new java.awt.GridLayout(2, 0));
+
+        anhadirjTextField.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        anhadirjTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        anhadirjTextField.setPreferredSize(new java.awt.Dimension(160, 23));
+        anhadirjPanel.add(anhadirjTextField);
+
+        anhadirjButton.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        anhadirjButton.setText("Añadir");
+        anhadirjButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                anhadirjButtonActionPerformed(evt);
+            }
+        });
+        anhadirjPanel.add(anhadirjButton);
+
+        contenedorAnhadirjPanel.add(anhadirjPanel);
+
+        mensajeAnhadirjPanel.setLayout(new java.awt.GridBagLayout());
+
+        anhadirMensajejLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        anhadirMensajejLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mensajeAnhadirjPanel.add(anhadirMensajejLabel, new java.awt.GridBagConstraints());
+
+        contenedorAnhadirjPanel.add(mensajeAnhadirjPanel);
+
+        cuerpojPanel.add(contenedorAnhadirjPanel);
+
+        contenedorEliminarjPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Borrado palabra", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Dialog", 1, 12))); // NOI18N
+        contenedorEliminarjPanel.setLayout(new java.awt.GridLayout(2, 0));
+
+        eliminarjTextField.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        eliminarjTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        eliminarjTextField.setPreferredSize(new java.awt.Dimension(160, 23));
+        eliminarjPanel.add(eliminarjTextField);
+
+        eliminarjButton.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        eliminarjButton.setText("Borrar");
+        eliminarjButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarjButtonActionPerformed(evt);
+            }
+        });
+        eliminarjPanel.add(eliminarjButton);
+
+        contenedorEliminarjPanel.add(eliminarjPanel);
+
+        mensajeEliminarjPanel.setLayout(new java.awt.GridBagLayout());
+
+        eliminarMensajejLabel.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        eliminarMensajejLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        mensajeEliminarjPanel.add(eliminarMensajejLabel, new java.awt.GridBagConstraints());
+
+        contenedorEliminarjPanel.add(mensajeEliminarjPanel);
+
+        cuerpojPanel.add(contenedorEliminarjPanel);
+
+        mainjPanel.add(cuerpojPanel, java.awt.BorderLayout.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(mainjPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(mainjPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void anhadirjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anhadirjButtonActionPerformed
+        // TODO add your handling code here:
+        
+        String palabraAnhadir = this.anhadirjTextField.getText().toLowerCase();
+        
+        if(palabraAnhadir.length() == TAMANHO_PALABRA){
+            
+            if(gd.guardarPalabra(palabraAnhadir)){
+                this.anhadirMensajejLabel.setText("La palabra se añadió correctamente");
+            }
+            else{
+                this.anhadirMensajejLabel.setText("La palabra insertada ya existe");
+            }
+        
+        }
+        else{
+            this.anhadirMensajejLabel.setText("La palabra a insertar solo puede llevar " + TAMANHO_PALABRA + " letras");
+        }
+        
+    }//GEN-LAST:event_anhadirjButtonActionPerformed
+
+    private void eliminarjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarjButtonActionPerformed
+        // TODO add your handling code here:
+        
+        String palabraEliminar = this.eliminarjTextField.getText().toLowerCase();
+        
+        if(palabraEliminar.length() == TAMANHO_PALABRA){
+            
+            if(gd.eliminarPalabra(palabraEliminar)){
+                this.eliminarMensajejLabel.setText("La palabra se eliminó correctamente");
+            }
+            else{
+                this.eliminarMensajejLabel.setText("La palabra insertada no existe");
+            }
+        
+        }
+        else{
+            this.eliminarMensajejLabel.setText("La palabra a insertar solo puede llevar " + TAMANHO_PALABRA + " letras");
+        }
+        
+    }//GEN-LAST:event_eliminarjButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -115,7 +227,21 @@ public class AnhadirEliminarPalabras extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel anhadirMensajejLabel;
+    private javax.swing.JButton anhadirjButton;
+    private javax.swing.JPanel anhadirjPanel;
+    private javax.swing.JTextField anhadirjTextField;
+    private javax.swing.JPanel contenedorAnhadirjPanel;
+    private javax.swing.JPanel contenedorEliminarjPanel;
+    private javax.swing.JPanel cuerpojPanel;
+    private javax.swing.JLabel eliminarMensajejLabel;
+    private javax.swing.JButton eliminarjButton;
+    private javax.swing.JPanel eliminarjPanel;
+    private javax.swing.JTextField eliminarjTextField;
+    private javax.swing.JPanel mainjPanel;
+    private javax.swing.JPanel mensajeAnhadirjPanel;
+    private javax.swing.JPanel mensajeEliminarjPanel;
+    private javax.swing.JLabel titulojLabel;
+    private javax.swing.JPanel titulojPanel;
     // End of variables declaration//GEN-END:variables
 }
