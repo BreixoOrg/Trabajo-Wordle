@@ -9,6 +9,9 @@
         <Menu class="javax.swing.JMenu" name="modoDeJuegojMenu">
           <Properties>
             <Property name="text" type="java.lang.String" value="Opciones"/>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Hand Cursor"/>
+            </Property>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JRadioButtonMenuItem" name="ficheroDeTextojRadioButtonMenuItem">
@@ -18,6 +21,9 @@
                 </Property>
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Fichero de texto"/>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Hand Cursor"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ficheroDeTextojRadioButtonMenuItemActionPerformed"/>
@@ -29,6 +35,9 @@
                   <ComponentRef name="modosDeJuegobuttonGroup"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Base de datos ES"/>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Hand Cursor"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="baseDeDatosESjRadioButtonMenuItemActionPerformed"/>
@@ -40,11 +49,17 @@
                   <ComponentRef name="modosDeJuegobuttonGroup"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Base de datos EN"/>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Hand Cursor"/>
+                </Property>
               </Properties>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="anhadirEliminarPalabrasjMenuItem">
               <Properties>
                 <Property name="text" type="java.lang.String" value="A&#xf1;adir/Eliminar Palabras"/>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Hand Cursor"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="anhadirEliminarPalabrasjMenuItemActionPerformed"/>
@@ -53,6 +68,9 @@
             <MenuItem class="javax.swing.JMenuItem" name="reiniciarMenuItem">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Reiniciar"/>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Hand Cursor"/>
+                </Property>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="reiniciarMenuItemActionPerformed"/>
@@ -515,14 +533,23 @@
               <SubComponents>
                 <Component class="javax.swing.JTextField" name="palabraJTextField">
                   <Properties>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Hand Cursor"/>
+                    </Property>
                     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[120, 23]"/>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="palabraJTextFieldKeyReleased"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JButton" name="enviarJButton">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="Enviar"/>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Hand Cursor"/>
+                    </Property>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="enviarJButtonActionPerformed"/>

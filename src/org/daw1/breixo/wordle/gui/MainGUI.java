@@ -5,6 +5,7 @@
  */
 package org.daw1.breixo.wordle.gui;
 
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.logging.Level;
@@ -394,10 +395,17 @@ public class MainGUI extends javax.swing.JFrame {
 
         inputJPanel.setBackground(new java.awt.Color(255, 255, 255));
 
+        palabraJTextField.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         palabraJTextField.setPreferredSize(new java.awt.Dimension(120, 23));
+        palabraJTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                palabraJTextFieldKeyReleased(evt);
+            }
+        });
         inputJPanel.add(palabraJTextField);
 
         enviarJButton.setText("Enviar");
+        enviarJButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         enviarJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 enviarJButtonActionPerformed(evt);
@@ -438,10 +446,12 @@ public class MainGUI extends javax.swing.JFrame {
         mainJPanel.add(bottomJPanel, java.awt.BorderLayout.PAGE_END);
 
         modoDeJuegojMenu.setText("Opciones");
+        modoDeJuegojMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
 
         modosDeJuegobuttonGroup.add(ficheroDeTextojRadioButtonMenuItem);
         ficheroDeTextojRadioButtonMenuItem.setSelected(true);
         ficheroDeTextojRadioButtonMenuItem.setText("Fichero de texto");
+        ficheroDeTextojRadioButtonMenuItem.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         ficheroDeTextojRadioButtonMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ficheroDeTextojRadioButtonMenuItemActionPerformed(evt);
@@ -451,6 +461,7 @@ public class MainGUI extends javax.swing.JFrame {
 
         modosDeJuegobuttonGroup.add(baseDeDatosESjRadioButtonMenuItem);
         baseDeDatosESjRadioButtonMenuItem.setText("Base de datos ES");
+        baseDeDatosESjRadioButtonMenuItem.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         baseDeDatosESjRadioButtonMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 baseDeDatosESjRadioButtonMenuItemActionPerformed(evt);
@@ -460,9 +471,11 @@ public class MainGUI extends javax.swing.JFrame {
 
         modosDeJuegobuttonGroup.add(baseDeDatosENjRadioButtonMenuItem);
         baseDeDatosENjRadioButtonMenuItem.setText("Base de datos EN");
+        baseDeDatosENjRadioButtonMenuItem.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         modoDeJuegojMenu.add(baseDeDatosENjRadioButtonMenuItem);
 
         anhadirEliminarPalabrasjMenuItem.setText("Añadir/Eliminar Palabras");
+        anhadirEliminarPalabrasjMenuItem.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         anhadirEliminarPalabrasjMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 anhadirEliminarPalabrasjMenuItemActionPerformed(evt);
@@ -471,6 +484,7 @@ public class MainGUI extends javax.swing.JFrame {
         modoDeJuegojMenu.add(anhadirEliminarPalabrasjMenuItem);
 
         reiniciarMenuItem.setText("Reiniciar");
+        reiniciarMenuItem.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         reiniciarMenuItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 reiniciarMenuItemActionPerformed(evt);
@@ -506,9 +520,104 @@ public class MainGUI extends javax.swing.JFrame {
         reiniciarProgram();
     }//GEN-LAST:event_baseDeDatosESjRadioButtonMenuItemActionPerformed
 
+    private void reiniciarMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reiniciarMenuItemActionPerformed
+        // TODO add your handling code here:
+        reiniciarProgram();
+        
+    }//GEN-LAST:event_reiniciarMenuItemActionPerformed
+
+    private void anhadirEliminarPalabrasjMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anhadirEliminarPalabrasjMenuItemActionPerformed
+        // TODO add your handling code here:
+        
+        AnhadirEliminarPalabras dialog = new AnhadirEliminarPalabras(this,true,gf);
+        dialog.setVisible(true);
+        
+    }//GEN-LAST:event_anhadirEliminarPalabrasjMenuItemActionPerformed
+
     private void enviarJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarJButtonActionPerformed
+        codigoFuncionamientoPanelCentral();
+        /*
+        String palabra = this.palabraJTextField.getText().toLowerCase();
 
+        int contadorLetrasAcertadas = 0;
 
+        if(palabra.length() == TAMANHO_PALABRA){
+
+            quitarErrorPalabras();
+
+            java.awt.Color colorearDe;
+
+            for (int i = 0; i < TAMANHO_PALABRA; i++) {
+                int printColor = gf.comprobarCaracter(i, palabraAdivinar, palabra);
+
+                String ponerLetra = palabra.substring(0 + i, 1 + i).toUpperCase();
+
+                String viewVerde;
+                String viewAmarillo;
+                String viewRojo;
+
+                if (printColor == 1) {
+                    colorearDe = COLOR_VERDE;
+                    contadorLetrasAcertadas++;
+
+                    letrasEnVerde.add(ponerLetra);
+
+                    if(letrasEnAmarillo.contains(ponerLetra)){
+                        letrasEnAmarillo.remove(ponerLetra);
+                        viewAmarillo = limpiarCorchetesSet(letrasEnAmarillo.toString());
+                        this.existenJLabel.setText(viewAmarillo);
+                    }
+                    viewVerde = limpiarCorchetesSet(letrasEnVerde.toString());
+                    this.bienJLabel.setText(viewVerde);
+                } else if (printColor == 0) {
+                    colorearDe = COLOR_AMARILLO;
+                    if(!letrasEnVerde.contains(ponerLetra)){
+                        letrasEnAmarillo.add(ponerLetra);
+                    }
+                    viewAmarillo = limpiarCorchetesSet(letrasEnAmarillo.toString());
+                    this.existenJLabel.setText(viewAmarillo);
+                } else {
+                    colorearDe = COLOR_ROJO;
+
+                    letrasEnRojo.add(ponerLetra);
+                    viewRojo = limpiarCorchetesSet(letrasEnRojo.toString());
+                    this.malJLabel.setText(viewRojo);
+                }
+
+                colorearLabelYPonerLetra(INTENTOS_EN_PARTIDA, i, colorearDe, ponerLetra);
+            }
+
+            INTENTOS_EN_PARTIDA++;
+
+            if(contadorLetrasAcertadas == TAMANHO_PALABRA){
+
+                this.palabraJTextField.setEnabled(false);
+                this.finalJLabel.setForeground(COLOR_VERDE);
+                this.finalJLabel.setText("Enhorabuena, has ganado en " + INTENTOS_EN_PARTIDA + " intentos");
+            }
+            else if(INTENTOS_EN_PARTIDA == 6){
+
+                this.palabraJTextField.setEnabled(false);
+                this.finalJLabel.setForeground(COLOR_ROJO);
+                this.finalJLabel.setText("Que pena, la palabra era " + palabraAdivinar.toUpperCase());
+            }
+
+        }
+        else{
+            ponerErrorPalabras();
+        }
+        */
+    }//GEN-LAST:event_enviarJButtonActionPerformed
+
+    private void palabraJTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_palabraJTextFieldKeyReleased
+        // TODO add your handling code here:
+        if(evt.getKeyCode()==KeyEvent.VK_ENTER){
+            codigoFuncionamientoPanelCentral();
+        }
+    }//GEN-LAST:event_palabraJTextFieldKeyReleased
+
+    private void codigoFuncionamientoPanelCentral(){
+    
         String palabra = this.palabraJTextField.getText().toLowerCase();
         
         int contadorLetrasAcertadas = 0;
@@ -578,23 +687,9 @@ public class MainGUI extends javax.swing.JFrame {
         else{
             ponerErrorPalabras();
         }
-
-    }//GEN-LAST:event_enviarJButtonActionPerformed
-
-    private void reiniciarMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reiniciarMenuItemActionPerformed
-        // TODO add your handling code here:
-        reiniciarProgram();
-        
-    }//GEN-LAST:event_reiniciarMenuItemActionPerformed
-
-    private void anhadirEliminarPalabrasjMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anhadirEliminarPalabrasjMenuItemActionPerformed
-        // TODO add your handling code here:
-        
-        AnhadirEliminarPalabras dialog = new AnhadirEliminarPalabras(this,true,gf);
-        dialog.setVisible(true);
-        
-    }//GEN-LAST:event_anhadirEliminarPalabrasjMenuItemActionPerformed
-
+    
+    }
+    
     private void reiniciarProgram(){
     
         vaciarLabels();
