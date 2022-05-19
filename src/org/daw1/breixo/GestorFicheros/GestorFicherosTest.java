@@ -41,5 +41,10 @@ public class GestorFicherosTest implements IGestorDatos{
             return -1;
         }
     }
+
+    @Override
+    public boolean existePalabra(String palabra) {
+        return true;
+    }
     
 }

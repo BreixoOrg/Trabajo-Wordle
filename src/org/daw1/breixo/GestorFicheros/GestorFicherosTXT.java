@@ -202,4 +202,12 @@ public class GestorFicherosTXT implements IGestorDatos {
     
     }
 
+    @Override
+    public boolean existePalabra(String palabra) {
+        cargarPalabrasFileToSet();
+        return setPalabras.contains(palabra);
+    }
+    
+    
+
 }

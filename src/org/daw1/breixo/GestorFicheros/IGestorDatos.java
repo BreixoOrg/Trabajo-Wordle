@@ -27,4 +27,6 @@ public abstract interface IGestorDatos {
     
     public int comprobarCaracter(int  posicion, String palabraProg, String palabraUser);
     
+    public boolean existePalabra(String palabra);
+    
 }

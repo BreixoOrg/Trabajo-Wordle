@@ -30,5 +30,10 @@ public class GestorFicherosBaseDatos implements IGestorDatos{
     public int comprobarCaracter(int posicion, String palabraProg, String palabraUser) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public boolean existePalabra(String palabra) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

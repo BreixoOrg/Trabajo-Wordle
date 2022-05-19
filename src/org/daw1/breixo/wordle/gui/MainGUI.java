@@ -22,9 +22,9 @@ public class MainGUI extends javax.swing.JFrame {
     private static final java.awt.Color COLOR_AMARILLO = new java.awt.Color(204, 153, 0);
     private static final java.awt.Color COLOR_ROJO = new java.awt.Color(255, 0, 0);
     
-    private static java.util.Set<String> letrasEnVerde = new java.util.HashSet<>();
-    private static java.util.Set<String> letrasEnAmarillo = new java.util.HashSet<>();
-    private static java.util.Set<String> letrasEnRojo = new java.util.HashSet<>();
+    private static java.util.Set<String> letrasEnVerde = new java.util.TreeSet<>();
+    private static java.util.Set<String> letrasEnAmarillo = new java.util.TreeSet<>();
+    private static java.util.Set<String> letrasEnRojo = new java.util.TreeSet<>();
     
     private static File FICHERO = new File(Path.of(".") + File.separator + "data" + File.separator + "palabras.txt");
     private static File FICHERO_TXT = new File(Path.of(".") + File.separator + "data" + File.separator + "palabras.txt");
@@ -48,11 +48,11 @@ public class MainGUI extends javax.swing.JFrame {
      */
     public MainGUI() {
         
-        //gf = new GestorFicherosTest();
+        gf = new GestorFicherosTest();
         initComponents();
         inicializarLabels();
         ocultarLabels();
-        gf = new GestorFicherosTXT(FICHERO);
+        //gf = new GestorFicherosTXT(FICHERO);
         INTENTOS_EN_PARTIDA=0;
         palabraAdivinar = gf.cargarPalabraAleatoria();
         
@@ -172,11 +172,11 @@ public class MainGUI extends javax.swing.JFrame {
         bottomJPanel = new javax.swing.JPanel();
         estadoJPanel = new javax.swing.JPanel();
         malJPanel = new javax.swing.JPanel();
-        malJLabel = new javax.swing.JLabel();
+        bienJLabel = new javax.swing.JLabel();
         existenJPanel = new javax.swing.JPanel();
         existenJLabel = new javax.swing.JLabel();
         bienJPanel = new javax.swing.JPanel();
-        bienJLabel = new javax.swing.JLabel();
+        malJLabel = new javax.swing.JLabel();
         inputJPanel = new javax.swing.JPanel();
         palabraJTextField = new javax.swing.JTextField();
         enviarJButton = new javax.swing.JButton();
@@ -363,10 +363,10 @@ public class MainGUI extends javax.swing.JFrame {
         malJPanel.setBackground(new java.awt.Color(255, 255, 255));
         malJPanel.setLayout(new java.awt.GridLayout(1, 0));
 
-        malJLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        malJLabel.setForeground(new java.awt.Color(255, 0, 0));
-        malJLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        malJPanel.add(malJLabel);
+        bienJLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        bienJLabel.setForeground(new java.awt.Color(0, 153, 0));
+        bienJLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        malJPanel.add(bienJLabel);
 
         estadoJPanel.add(malJPanel);
 
@@ -383,10 +383,10 @@ public class MainGUI extends javax.swing.JFrame {
         bienJPanel.setBackground(new java.awt.Color(255, 255, 255));
         bienJPanel.setLayout(new java.awt.GridLayout(1, 0));
 
-        bienJLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        bienJLabel.setForeground(new java.awt.Color(0, 153, 0));
-        bienJLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        bienJPanel.add(bienJLabel);
+        malJLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        malJLabel.setForeground(new java.awt.Color(255, 0, 0));
+        malJLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        bienJPanel.add(malJLabel);
 
         estadoJPanel.add(bienJPanel);
 
@@ -523,23 +523,37 @@ public class MainGUI extends javax.swing.JFrame {
                 int printColor = gf.comprobarCaracter(i, palabraAdivinar, palabra);
                 
                 String ponerLetra = palabra.substring(0 + i, 1 + i).toUpperCase();
+                
+                String viewVerde;
+                String viewAmarillo;
+                String viewRojo;
 
                 if (printColor == 1) {
                     colorearDe = COLOR_VERDE;
                     contadorLetrasAcertadas++;
                     
                     letrasEnVerde.add(ponerLetra);
-                    this.bienJLabel.setText(letrasEnVerde.toString());
+                    
+                    if(letrasEnAmarillo.contains(ponerLetra)){
+                        letrasEnAmarillo.remove(ponerLetra);
+                        viewAmarillo = limpiarCorchetesSet(letrasEnAmarillo.toString());
+                        this.existenJLabel.setText(viewAmarillo);
+                    }
+                    viewVerde = limpiarCorchetesSet(letrasEnVerde.toString());
+                    this.bienJLabel.setText(viewVerde);
                 } else if (printColor == 0) {
                     colorearDe = COLOR_AMARILLO;
-                    
-                    letrasEnAmarillo.add(ponerLetra);
-                    this.existenJLabel.setText(letrasEnAmarillo.toString());
+                    if(!letrasEnVerde.contains(ponerLetra)){
+                        letrasEnAmarillo.add(ponerLetra);
+                    }
+                    viewAmarillo = limpiarCorchetesSet(letrasEnAmarillo.toString());
+                    this.existenJLabel.setText(viewAmarillo);
                 } else {
                     colorearDe = COLOR_ROJO;
                     
                     letrasEnRojo.add(ponerLetra);
-                    this.malJLabel.setText(letrasEnRojo.toString());
+                    viewRojo = limpiarCorchetesSet(letrasEnRojo.toString());
+                    this.malJLabel.setText(viewRojo);
                 }
 
                 colorearLabelYPonerLetra(INTENTOS_EN_PARTIDA, i, colorearDe, ponerLetra);
@@ -589,6 +603,12 @@ public class MainGUI extends javax.swing.JFrame {
         this.palabraJTextField.setEnabled(true);
         this.finalJLabel.setText(CADENA_VACIA);
         this.finalJLabel.setVisible(false);
+        letrasEnVerde.clear();
+        this.bienJLabel.setText(CADENA_VACIA);
+        letrasEnAmarillo.clear();
+        this.existenJLabel.setText(CADENA_VACIA);
+        letrasEnRojo.clear();
+        this.malJLabel.setText(CADENA_VACIA);
     }
     
     private void ponerErrorPalabras(){
@@ -607,7 +627,16 @@ public class MainGUI extends javax.swing.JFrame {
         this.palabraJTextField.setText(CADENA_VACIA);
     }
     
-    
+    private String limpiarCorchetesSet(String c) {
+
+        StringBuilder sb = new StringBuilder(c);
+        
+        sb = sb.delete(0, 1);
+
+        sb = sb.delete(sb.length()-1, sb.length());
+        
+        return sb.toString();
+    }
     
     private void seleccionarConversor(){
     
