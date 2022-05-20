@@ -43,16 +43,19 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="baseDeDatosESjRadioButtonMenuItemActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JRadioButtonMenuItem" name="baseDeDatosENjRadioButtonMenuItem">
+            <MenuItem class="javax.swing.JRadioButtonMenuItem" name="baseDeDatosGLjRadioButtonMenuItem">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="modosDeJuegobuttonGroup"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Base de datos EN"/>
+                <Property name="text" type="java.lang.String" value="Base de datos GL"/>
                 <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                   <Color id="Hand Cursor"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="baseDeDatosGLjRadioButtonMenuItemActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="anhadirEliminarPalabrasjMenuItem">
               <Properties>

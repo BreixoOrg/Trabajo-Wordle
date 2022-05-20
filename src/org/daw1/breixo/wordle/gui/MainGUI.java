@@ -189,7 +189,7 @@ public class MainGUI extends javax.swing.JFrame {
         modoDeJuegojMenu = new javax.swing.JMenu();
         ficheroDeTextojRadioButtonMenuItem = new javax.swing.JRadioButtonMenuItem();
         baseDeDatosESjRadioButtonMenuItem = new javax.swing.JRadioButtonMenuItem();
-        baseDeDatosENjRadioButtonMenuItem = new javax.swing.JRadioButtonMenuItem();
+        baseDeDatosGLjRadioButtonMenuItem = new javax.swing.JRadioButtonMenuItem();
         anhadirEliminarPalabrasjMenuItem = new javax.swing.JMenuItem();
         reiniciarMenuItem = new javax.swing.JMenuItem();
 
@@ -469,10 +469,15 @@ public class MainGUI extends javax.swing.JFrame {
         });
         modoDeJuegojMenu.add(baseDeDatosESjRadioButtonMenuItem);
 
-        modosDeJuegobuttonGroup.add(baseDeDatosENjRadioButtonMenuItem);
-        baseDeDatosENjRadioButtonMenuItem.setText("Base de datos EN");
-        baseDeDatosENjRadioButtonMenuItem.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        modoDeJuegojMenu.add(baseDeDatosENjRadioButtonMenuItem);
+        modosDeJuegobuttonGroup.add(baseDeDatosGLjRadioButtonMenuItem);
+        baseDeDatosGLjRadioButtonMenuItem.setText("Base de datos GL");
+        baseDeDatosGLjRadioButtonMenuItem.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        baseDeDatosGLjRadioButtonMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                baseDeDatosGLjRadioButtonMenuItemActionPerformed(evt);
+            }
+        });
+        modoDeJuegojMenu.add(baseDeDatosGLjRadioButtonMenuItem);
 
         anhadirEliminarPalabrasjMenuItem.setText("Añadir/Eliminar Palabras");
         anhadirEliminarPalabrasjMenuItem.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -536,85 +541,18 @@ public class MainGUI extends javax.swing.JFrame {
 
     private void enviarJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_enviarJButtonActionPerformed
         codigoFuncionamientoPanelCentral();
-        /*
-        String palabra = this.palabraJTextField.getText().toLowerCase();
-
-        int contadorLetrasAcertadas = 0;
-
-        if(palabra.length() == TAMANHO_PALABRA){
-
-            quitarErrorPalabras();
-
-            java.awt.Color colorearDe;
-
-            for (int i = 0; i < TAMANHO_PALABRA; i++) {
-                int printColor = gf.comprobarCaracter(i, palabraAdivinar, palabra);
-
-                String ponerLetra = palabra.substring(0 + i, 1 + i).toUpperCase();
-
-                String viewVerde;
-                String viewAmarillo;
-                String viewRojo;
-
-                if (printColor == 1) {
-                    colorearDe = COLOR_VERDE;
-                    contadorLetrasAcertadas++;
-
-                    letrasEnVerde.add(ponerLetra);
-
-                    if(letrasEnAmarillo.contains(ponerLetra)){
-                        letrasEnAmarillo.remove(ponerLetra);
-                        viewAmarillo = limpiarCorchetesSet(letrasEnAmarillo.toString());
-                        this.existenJLabel.setText(viewAmarillo);
-                    }
-                    viewVerde = limpiarCorchetesSet(letrasEnVerde.toString());
-                    this.bienJLabel.setText(viewVerde);
-                } else if (printColor == 0) {
-                    colorearDe = COLOR_AMARILLO;
-                    if(!letrasEnVerde.contains(ponerLetra)){
-                        letrasEnAmarillo.add(ponerLetra);
-                    }
-                    viewAmarillo = limpiarCorchetesSet(letrasEnAmarillo.toString());
-                    this.existenJLabel.setText(viewAmarillo);
-                } else {
-                    colorearDe = COLOR_ROJO;
-
-                    letrasEnRojo.add(ponerLetra);
-                    viewRojo = limpiarCorchetesSet(letrasEnRojo.toString());
-                    this.malJLabel.setText(viewRojo);
-                }
-
-                colorearLabelYPonerLetra(INTENTOS_EN_PARTIDA, i, colorearDe, ponerLetra);
-            }
-
-            INTENTOS_EN_PARTIDA++;
-
-            if(contadorLetrasAcertadas == TAMANHO_PALABRA){
-
-                this.palabraJTextField.setEnabled(false);
-                this.finalJLabel.setForeground(COLOR_VERDE);
-                this.finalJLabel.setText("Enhorabuena, has ganado en " + INTENTOS_EN_PARTIDA + " intentos");
-            }
-            else if(INTENTOS_EN_PARTIDA == 6){
-
-                this.palabraJTextField.setEnabled(false);
-                this.finalJLabel.setForeground(COLOR_ROJO);
-                this.finalJLabel.setText("Que pena, la palabra era " + palabraAdivinar.toUpperCase());
-            }
-
-        }
-        else{
-            ponerErrorPalabras();
-        }
-        */
     }//GEN-LAST:event_enviarJButtonActionPerformed
 
     private void palabraJTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_palabraJTextFieldKeyReleased
-        // TODO add your handling code here:
         if(evt.getKeyCode()==KeyEvent.VK_ENTER){
             codigoFuncionamientoPanelCentral();
         }
     }//GEN-LAST:event_palabraJTextFieldKeyReleased
+
+    private void baseDeDatosGLjRadioButtonMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_baseDeDatosGLjRadioButtonMenuItemActionPerformed
+        seleccionarConversor();
+        reiniciarProgram();
+    }//GEN-LAST:event_baseDeDatosGLjRadioButtonMenuItemActionPerformed
 
     private void codigoFuncionamientoPanelCentral(){
     
@@ -693,11 +631,10 @@ public class MainGUI extends javax.swing.JFrame {
     private void reiniciarProgram(){
     
         vaciarLabels();
-        INTENTOS_EN_PARTIDA=0;
+        INTENTOS_EN_PARTIDA = 0;
         palabraAdivinar = gf.cargarPalabraAleatoria();
         this.palabraJTextField.setEnabled(true);
         this.finalJLabel.setText(CADENA_VACIA);
-        this.finalJLabel.setVisible(false);
         letrasEnVerde.clear();
         this.bienJLabel.setText(CADENA_VACIA);
         letrasEnAmarillo.clear();
@@ -740,8 +677,10 @@ public class MainGUI extends javax.swing.JFrame {
             gf = new GestorFicherosTXT(FICHERO);
         }
         else if(this.baseDeDatosESjRadioButtonMenuItem.isSelected()){
-            /*FICHERO = FICHERO_;*/
-            gf = new GestorFicherosBaseDatos();
+            gf = new GestorFicherosBaseDatos("es");
+        }
+        else if(this.baseDeDatosGLjRadioButtonMenuItem.isSelected()){
+            gf = new GestorFicherosBaseDatos("gl");
         }
     
     }
@@ -783,8 +722,8 @@ public class MainGUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem anhadirEliminarPalabrasjMenuItem;
-    private javax.swing.JRadioButtonMenuItem baseDeDatosENjRadioButtonMenuItem;
     private javax.swing.JRadioButtonMenuItem baseDeDatosESjRadioButtonMenuItem;
+    private javax.swing.JRadioButtonMenuItem baseDeDatosGLjRadioButtonMenuItem;
     private javax.swing.JLabel bienJLabel;
     private javax.swing.JPanel bienJPanel;
     private javax.swing.JPanel bottomJPanel;

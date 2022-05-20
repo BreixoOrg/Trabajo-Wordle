@@ -13,7 +13,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
-import java.nio.file.Path;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,6 +31,7 @@ public class GestorFicherosTXT implements IGestorDatos {
 
     public GestorFicherosTXT(File fichero) {
         FICHERO = fichero;
+        cargarPalabrasFileToSet();
     }
     
     
@@ -42,8 +42,6 @@ public class GestorFicherosTXT implements IGestorDatos {
         if (!FICHERO.exists()) {
             crearFichero();
         }
-
-        cargarPalabrasFileToSet();
 
         String palabra = "";
 
@@ -80,15 +78,12 @@ public class GestorFicherosTXT implements IGestorDatos {
                 Logger.getLogger(GestorFicherosTXT.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
         return false;
 
     }
 
     @Override
     public boolean eliminarPalabra(String palabra) {
-        
-        cargarPalabrasFileToSet();
 
         palabra = palabra.toLowerCase().trim();
 
@@ -98,13 +93,12 @@ public class GestorFicherosTXT implements IGestorDatos {
                 crearFichero();
             }
 
-            cargarPalabrasFileToSet();
-
             if (setPalabras.contains(palabra)) {
 
                 if (setPalabras.remove(palabra)) {
-                    cargarPalabrasSetToFile();
-                    return true;
+                    if(cargarPalabrasSetToFile()){
+                        return true;
+                    }
                 }
 
             }
@@ -116,7 +110,8 @@ public class GestorFicherosTXT implements IGestorDatos {
 
     @Override
     public int comprobarCaracter(int posicion, String palabraProg, String palabraUser) {
-
+        
+        palabraUser = palabraUser.toLowerCase().trim();
         char letra = palabraUser.charAt(posicion);
 
         if (palabraProg.contains(letra + "")) {
@@ -130,6 +125,13 @@ public class GestorFicherosTXT implements IGestorDatos {
             return -1;
         }
 
+    }
+    
+    @Override
+    public boolean existePalabra(String palabra) {
+        cargarPalabrasFileToSet();
+        palabra = palabra.toLowerCase().trim();
+        return setPalabras.contains(palabra);
     }
 
     private boolean cargarPalabrasFileToSet() {
@@ -162,6 +164,7 @@ public class GestorFicherosTXT implements IGestorDatos {
 
     private boolean checkPalabra(String palabra) {
 
+        palabra = palabra.toLowerCase().trim();
         if (palabra.matches("[^a-z]{5}")) {
             return false;
         }
@@ -169,45 +172,41 @@ public class GestorFicherosTXT implements IGestorDatos {
 
     }
     
-    private void cargarPalabrasSetToFile(){
     
+    private boolean cargarPalabrasSetToFile() {
+
         if (!FICHERO.exists()) {
-                crearFichero();
-            }
-        
+            crearFichero();
+        }
+
         try (Writer wr = new BufferedWriter(new FileWriter(FICHERO))) {
-                wr.write("");
-            } catch (IOException ex) {
-                Logger.getLogger(GestorFicherosTXT.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        
-        try (Writer wr = new BufferedWriter(new FileWriter(FICHERO,true))) {
-            
+            wr.write("");
+        } catch (IOException ex) {
+            Logger.getLogger(GestorFicherosTXT.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try (Writer wr = new BufferedWriter(new FileWriter(FICHERO, true))) {
+
             StringBuilder sb = new StringBuilder();
 
             Iterator it = setPalabras.iterator();
-            
-            while(it.hasNext()){
-            
+
+            while (it.hasNext()) {
+
                 String aux = (String) it.next();
-                
+
                 sb.append(aux).append("\n");
             }
-            
+
             wr.write(sb.toString());
             
-            } catch (IOException ex) {
-                Logger.getLogger(GestorFicherosTXT.class.getName()).log(Level.SEVERE, null, ex);
-            }
-    
-    }
+            return true;
 
-    @Override
-    public boolean existePalabra(String palabra) {
-        cargarPalabrasFileToSet();
-        return setPalabras.contains(palabra);
+        } catch (IOException ex) {
+            Logger.getLogger(GestorFicherosTXT.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+
     }
-    
-    
 
 }

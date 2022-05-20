@@ -21,6 +21,9 @@ public class AnhadirEliminarPalabras extends javax.swing.JDialog {
     
     private static int TAMANHO_PALABRA = 5;
     
+    private static final java.awt.Color COLOR_VERDE = new java.awt.Color(0, 153, 0);
+    private static final java.awt.Color COLOR_ROJO = new java.awt.Color(255, 0, 0);
+    
     public AnhadirEliminarPalabras(java.awt.Frame parent, boolean modal,IGestorDatos gf) {
         super(parent, modal);
         gd = gf;
@@ -149,15 +152,20 @@ public class AnhadirEliminarPalabras extends javax.swing.JDialog {
         
         if(palabraAnhadir.length() == TAMANHO_PALABRA){
             
-            if(gd.guardarPalabra(palabraAnhadir)){
-                this.anhadirMensajejLabel.setText("La palabra se añadió correctamente");
+            if(!gd.existePalabra(palabraAnhadir)){
+                if(gd.guardarPalabra(palabraAnhadir)){
+                    this.anhadirMensajejLabel.setForeground(COLOR_VERDE);
+                    this.anhadirMensajejLabel.setText("La palabra se añadió correctamente");
+                }
             }
             else{
+                this.anhadirMensajejLabel.setForeground(COLOR_ROJO);
                 this.anhadirMensajejLabel.setText("La palabra insertada ya existe");
             }
         
         }
         else{
+            this.anhadirMensajejLabel.setForeground(COLOR_ROJO);
             this.anhadirMensajejLabel.setText("La palabra a insertar solo puede llevar " + TAMANHO_PALABRA + " letras");
         }
         
@@ -171,14 +179,17 @@ public class AnhadirEliminarPalabras extends javax.swing.JDialog {
         if(palabraEliminar.length() == TAMANHO_PALABRA){
             
             if(gd.eliminarPalabra(palabraEliminar)){
+                this.eliminarMensajejLabel.setForeground(COLOR_VERDE);
                 this.eliminarMensajejLabel.setText("La palabra se eliminó correctamente");
             }
             else{
+                this.eliminarMensajejLabel.setForeground(COLOR_ROJO);
                 this.eliminarMensajejLabel.setText("La palabra insertada no existe");
             }
         
         }
         else{
+            this.eliminarMensajejLabel.setForeground(COLOR_ROJO);
             this.eliminarMensajejLabel.setText("La palabra a insertar solo puede llevar " + TAMANHO_PALABRA + " letras");
         }
         
