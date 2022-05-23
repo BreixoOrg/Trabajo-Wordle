@@ -5,6 +5,7 @@
  */
 package org.daw1.breixo.wordle.gui;
 
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -82,6 +83,11 @@ public class AnhadirEliminarPalabras extends javax.swing.JDialog {
         anhadirjTextField.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         anhadirjTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         anhadirjTextField.setPreferredSize(new java.awt.Dimension(160, 23));
+        anhadirjTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                anhadirjTextFieldKeyReleased(evt);
+            }
+        });
         anhadirjPanel.add(anhadirjTextField);
 
         anhadirjButton.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -111,6 +117,11 @@ public class AnhadirEliminarPalabras extends javax.swing.JDialog {
         eliminarjTextField.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         eliminarjTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         eliminarjTextField.setPreferredSize(new java.awt.Dimension(160, 23));
+        eliminarjTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                eliminarjTextFieldKeyReleased(evt);
+            }
+        });
         eliminarjPanel.add(eliminarjTextField);
 
         eliminarjButton.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -153,62 +164,34 @@ public class AnhadirEliminarPalabras extends javax.swing.JDialog {
     private void anhadirjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_anhadirjButtonActionPerformed
         // TODO add your handling code here:
         
-        String palabraAnhadir = this.anhadirjTextField.getText().toLowerCase();
-        
-        if(palabraAnhadir.length() == TAMANHO_PALABRA){
-            
-            if(!gd.existePalabra(palabraAnhadir)){
-                try {
-                    if(gd.guardarPalabra(palabraAnhadir)){
-                        this.anhadirMensajejLabel.setForeground(COLOR_VERDE);
-                        this.anhadirMensajejLabel.setText("La palabra se añadió correctamente");
-                    }
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(this, "Excepción Fichero de Texto: " + ex.getMessage());
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(this, "Excepción SQL: " + ex.getMessage());
-                }
-            }
-            else{
-                this.anhadirMensajejLabel.setForeground(COLOR_ROJO);
-                this.anhadirMensajejLabel.setText("La palabra insertada ya existe");
-            }
-        
-        }
-        else{
-            this.anhadirMensajejLabel.setForeground(COLOR_ROJO);
-            this.anhadirMensajejLabel.setText("La palabra a insertar solo puede llevar " + TAMANHO_PALABRA + " letras");
-        }
+        codigoAnhadirPalabra();
         
     }//GEN-LAST:event_anhadirjButtonActionPerformed
 
     private void eliminarjButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarjButtonActionPerformed
         // TODO add your handling code here:
         
-        String palabraEliminar = this.eliminarjTextField.getText().toLowerCase();
-        
-        if(palabraEliminar.length() == TAMANHO_PALABRA){
-            
-            try {
-                if(gd.eliminarPalabra(palabraEliminar)){
-                    this.eliminarMensajejLabel.setForeground(COLOR_VERDE);
-                    this.eliminarMensajejLabel.setText("La palabra se eliminó correctamente");
-                }
-                else{
-                    this.eliminarMensajejLabel.setForeground(COLOR_ROJO);
-                    this.eliminarMensajejLabel.setText("La palabra insertada no existe");
-                }
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, "Excepción SQL: " + ex.getMessage());
-            }
-        
-        }
-        else{
-            this.eliminarMensajejLabel.setForeground(COLOR_ROJO);
-            this.eliminarMensajejLabel.setText("La palabra a insertar solo puede llevar " + TAMANHO_PALABRA + " letras");
-        }
+        codigoEliminarPalabra();
         
     }//GEN-LAST:event_eliminarjButtonActionPerformed
+
+    private void anhadirjTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_anhadirjTextFieldKeyReleased
+        // TODO add your handling code here:
+        
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            codigoAnhadirPalabra();
+        }
+        
+    }//GEN-LAST:event_anhadirjTextFieldKeyReleased
+
+    private void eliminarjTextFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_eliminarjTextFieldKeyReleased
+        // TODO add your handling code here:
+        
+        if(evt.getKeyCode() == KeyEvent.VK_ENTER){
+            codigoEliminarPalabra();
+        }
+        
+    }//GEN-LAST:event_eliminarjTextFieldKeyReleased
 
     /**
      * @param args the command line arguments
@@ -251,6 +234,70 @@ public class AnhadirEliminarPalabras extends javax.swing.JDialog {
             }
         });
     }
+    
+    private void codigoEliminarPalabra(){
+    
+        String palabraEliminar = this.eliminarjTextField.getText().toLowerCase();
+        this.eliminarjTextField.setText("");
+        this.anhadirMensajejLabel.setText("");
+        
+        if(palabraEliminar.length() == TAMANHO_PALABRA){
+            
+            try {
+                if(gd.eliminarPalabra(palabraEliminar)){
+                    this.eliminarMensajejLabel.setForeground(COLOR_VERDE);
+                    this.eliminarMensajejLabel.setText("La palabra se eliminó correctamente");
+                }
+                else{
+                    this.eliminarMensajejLabel.setForeground(COLOR_ROJO);
+                    this.eliminarMensajejLabel.setText("La palabra insertada no existe");
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, "Excepción SQL: " + ex.getMessage());
+            }
+        
+        }
+        else{
+            this.eliminarMensajejLabel.setForeground(COLOR_ROJO);
+            this.eliminarMensajejLabel.setText("La palabra a insertar solo puede llevar " + TAMANHO_PALABRA + " letras");
+        }
+    
+    }
+    
+    private void codigoAnhadirPalabra(){
+        
+        String palabraAnhadir = this.anhadirjTextField.getText().toLowerCase();
+        this.anhadirjTextField.setText("");
+        this.eliminarMensajejLabel.setText("");
+        
+        if(palabraAnhadir.length() == TAMANHO_PALABRA){
+            
+            if(!gd.existePalabra(palabraAnhadir)){
+                try {
+                    if(gd.guardarPalabra(palabraAnhadir)){
+                        this.anhadirMensajejLabel.setForeground(COLOR_VERDE);
+                        this.anhadirMensajejLabel.setText("La palabra se añadió correctamente");
+                    }
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(this, "Excepción Fichero de Texto: " + ex.getMessage());
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(this, "Excepción SQL: " + ex.getMessage());
+                }
+            }
+            else{
+                this.anhadirMensajejLabel.setForeground(COLOR_ROJO);
+                this.anhadirMensajejLabel.setText("La palabra insertada ya existe");
+            }
+        
+        }
+        else{
+            this.anhadirMensajejLabel.setForeground(COLOR_ROJO);
+            this.anhadirMensajejLabel.setText("La palabra a insertar solo puede llevar " + TAMANHO_PALABRA + " letras");
+        }
+    
+    }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel anhadirMensajejLabel;

@@ -104,6 +104,9 @@
                           <Dimension value="[160, 23]"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="anhadirjTextFieldKeyReleased"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="anhadirjButton">
                       <Properties>
@@ -169,6 +172,9 @@
                           <Dimension value="[160, 23]"/>
                         </Property>
                       </Properties>
+                      <Events>
+                        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="eliminarjTextFieldKeyReleased"/>
+                      </Events>
                     </Component>
                     <Component class="javax.swing.JButton" name="eliminarjButton">
                       <Properties>

@@ -90,13 +90,15 @@ public class GestorFicherosTXT implements IGestorDatos {
             if (!FICHERO.exists()) {
                 crearFichero();
             }
+            
+            cargarPalabrasFileToSet();
 
             if (setPalabras.contains(palabra)) {
 
                 if (setPalabras.remove(palabra)) {
-                    if(cargarPalabrasSetToFile()){
-                        return true;
-                    }
+                    cargarPalabrasSetToFile();
+                    return true;
+                    
                 }
 
             }
