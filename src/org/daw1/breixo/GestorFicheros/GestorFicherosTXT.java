@@ -61,7 +61,7 @@ public class GestorFicherosTXT implements IGestorDatos {
     }
 
     @Override
-    public boolean guardarPalabra(String palabra) {
+    public boolean guardarPalabra(String palabra) throws IOException {
 
         palabra = palabra.toLowerCase().trim();
 
@@ -74,8 +74,6 @@ public class GestorFicherosTXT implements IGestorDatos {
             try (Writer wr = new BufferedWriter(new FileWriter(FICHERO,true))) {
                 wr.write(palabra + "\n");
                 return true;
-            } catch (IOException ex) {
-                Logger.getLogger(GestorFicherosTXT.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return false;
@@ -111,6 +109,7 @@ public class GestorFicherosTXT implements IGestorDatos {
     @Override
     public int comprobarCaracter(int posicion, String palabraProg, String palabraUser) {
         
+        palabraProg = palabraProg.toLowerCase().trim();
         palabraUser = palabraUser.toLowerCase().trim();
         char letra = palabraUser.charAt(posicion);
 
@@ -144,9 +143,9 @@ public class GestorFicherosTXT implements IGestorDatos {
             }
             return true;
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(GestorFicherosTXT.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("ERROR: " + ex.getMessage());
         } catch (IOException ex) {
-            Logger.getLogger(GestorFicherosTXT.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("ERROR: " + ex.getMessage());
         }
         return false;
     }
@@ -157,7 +156,7 @@ public class GestorFicherosTXT implements IGestorDatos {
         try {
             FICHERO.createNewFile();
         } catch (IOException ex) {
-            Logger.getLogger(GestorFicherosTXT.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("ERROR: " + ex.getMessage());
         }
 
     }
@@ -182,7 +181,7 @@ public class GestorFicherosTXT implements IGestorDatos {
         try (Writer wr = new BufferedWriter(new FileWriter(FICHERO))) {
             wr.write("");
         } catch (IOException ex) {
-            Logger.getLogger(GestorFicherosTXT.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("ERROR: " + ex.getMessage());
         }
 
         try (Writer wr = new BufferedWriter(new FileWriter(FICHERO, true))) {
@@ -203,7 +202,7 @@ public class GestorFicherosTXT implements IGestorDatos {
             return true;
 
         } catch (IOException ex) {
-            Logger.getLogger(GestorFicherosTXT.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("ERROR: " + ex.getMessage());
         }
         return false;
 

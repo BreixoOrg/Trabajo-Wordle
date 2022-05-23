@@ -5,17 +5,20 @@
  */
 package org.daw1.breixo.GestorFicheros;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 /**
  *
  * @author Breixo
  */
 public abstract interface IGestorDatos {
     
-    public String cargarPalabraAleatoria();
+    public String cargarPalabraAleatoria() throws SQLException;
     
-    public boolean guardarPalabra(String palabra);
+    public boolean guardarPalabra(String palabra) throws IOException, SQLException;
     
-    public boolean eliminarPalabra(String palabra);
+    public boolean eliminarPalabra(String palabra) throws  SQLException;
     
     /**
      * 

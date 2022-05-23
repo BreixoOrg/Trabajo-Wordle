@@ -8,9 +8,11 @@ package org.daw1.breixo.wordle.gui;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.nio.file.Path;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import org.daw1.breixo.GestorFicheros.*;
 
 /**
@@ -48,16 +50,17 @@ public class MainGUI extends javax.swing.JFrame {
      * Creates new form MainGUI
      */
     public MainGUI() {
-        
-        gf = new GestorFicherosTest();
+        //gf = new GestorFicherosTest();
         initComponents();
         inicializarLabels();
         ocultarLabels();
-        //gf = new GestorFicherosTXT(FICHERO);
+        gf = new GestorFicherosTXT(FICHERO);
         INTENTOS_EN_PARTIDA=0;
-        palabraAdivinar = gf.cargarPalabraAleatoria();
-        
-        
+        try {
+            palabraAdivinar = gf.cargarPalabraAleatoria();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Excepción al cargar palabra: " + ex.getMessage());
+        }
     }
     
     
@@ -195,11 +198,17 @@ public class MainGUI extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("DAW1 Wordle Breixo");
+        setResizable(false);
 
         mainJPanel.setBackground(new java.awt.Color(255, 255, 255));
+        mainJPanel.setMaximumSize(new java.awt.Dimension(250, 444));
+        mainJPanel.setMinimumSize(new java.awt.Dimension(250, 444));
         mainJPanel.setLayout(new java.awt.BorderLayout());
 
         letrasJPanel.setBackground(new java.awt.Color(255, 255, 255));
+        letrasJPanel.setMaximumSize(new java.awt.Dimension(541, 372));
+        letrasJPanel.setMinimumSize(new java.awt.Dimension(541, 372));
+        letrasJPanel.setPreferredSize(new java.awt.Dimension(541, 372));
         letrasJPanel.setLayout(new java.awt.GridLayout(6, 5));
 
         jLabel1_1.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
@@ -355,7 +364,9 @@ public class MainGUI extends javax.swing.JFrame {
         mainJPanel.add(letrasJPanel, java.awt.BorderLayout.CENTER);
 
         bottomJPanel.setBackground(new java.awt.Color(255, 255, 255));
-        bottomJPanel.setPreferredSize(new java.awt.Dimension(200, 100));
+        bottomJPanel.setMaximumSize(new java.awt.Dimension(541, 72));
+        bottomJPanel.setMinimumSize(new java.awt.Dimension(541, 72));
+        bottomJPanel.setPreferredSize(new java.awt.Dimension(541, 72));
         bottomJPanel.setLayout(new java.awt.GridLayout(2, 2));
 
         estadoJPanel.setBackground(new java.awt.Color(255, 255, 255));
@@ -416,16 +427,14 @@ public class MainGUI extends javax.swing.JFrame {
         bottomJPanel.add(inputJPanel);
 
         exitoJPanel.setBackground(new java.awt.Color(255, 255, 255));
-        exitoJPanel.setLayout(new java.awt.GridBagLayout());
+        exitoJPanel.setMaximumSize(new java.awt.Dimension(198, 36));
+        exitoJPanel.setLayout(new java.awt.GridLayout());
 
         finalJLabel.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         finalJLabel.setForeground(new java.awt.Color(51, 153, 0));
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(18, 99, 18, 99);
-        exitoJPanel.add(finalJLabel, gridBagConstraints);
+        finalJLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        finalJLabel.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        exitoJPanel.add(finalJLabel);
 
         bottomJPanel.add(exitoJPanel);
 
@@ -444,6 +453,10 @@ public class MainGUI extends javax.swing.JFrame {
         bottomJPanel.add(errorJPanel);
 
         mainJPanel.add(bottomJPanel, java.awt.BorderLayout.PAGE_END);
+
+        mainjMenuBar.setMaximumSize(new java.awt.Dimension(541, 22));
+        mainjMenuBar.setMinimumSize(new java.awt.Dimension(541, 22));
+        mainjMenuBar.setPreferredSize(new java.awt.Dimension(541, 22));
 
         modoDeJuegojMenu.setText("Opciones");
         modoDeJuegojMenu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -505,11 +518,11 @@ public class MainGUI extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE)
+            .addComponent(mainJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 622, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
+            .addComponent(mainJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -632,7 +645,11 @@ public class MainGUI extends javax.swing.JFrame {
     
         vaciarLabels();
         INTENTOS_EN_PARTIDA = 0;
-        palabraAdivinar = gf.cargarPalabraAleatoria();
+        try {
+            palabraAdivinar = gf.cargarPalabraAleatoria();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Excepción al cargar palabra: " + ex.getMessage());
+        }
         this.palabraJTextField.setEnabled(true);
         this.finalJLabel.setText(CADENA_VACIA);
         letrasEnVerde.clear();

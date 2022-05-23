@@ -5,6 +5,11 @@
  */
 package org.daw1.breixo.wordle.gui;
 
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import org.daw1.breixo.GestorFicheros.IGestorDatos;
 
 /**
@@ -153,9 +158,15 @@ public class AnhadirEliminarPalabras extends javax.swing.JDialog {
         if(palabraAnhadir.length() == TAMANHO_PALABRA){
             
             if(!gd.existePalabra(palabraAnhadir)){
-                if(gd.guardarPalabra(palabraAnhadir)){
-                    this.anhadirMensajejLabel.setForeground(COLOR_VERDE);
-                    this.anhadirMensajejLabel.setText("La palabra se añadió correctamente");
+                try {
+                    if(gd.guardarPalabra(palabraAnhadir)){
+                        this.anhadirMensajejLabel.setForeground(COLOR_VERDE);
+                        this.anhadirMensajejLabel.setText("La palabra se añadió correctamente");
+                    }
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(this, "Excepción Fichero de Texto: " + ex.getMessage());
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(this, "Excepción SQL: " + ex.getMessage());
                 }
             }
             else{
@@ -178,13 +189,17 @@ public class AnhadirEliminarPalabras extends javax.swing.JDialog {
         
         if(palabraEliminar.length() == TAMANHO_PALABRA){
             
-            if(gd.eliminarPalabra(palabraEliminar)){
-                this.eliminarMensajejLabel.setForeground(COLOR_VERDE);
-                this.eliminarMensajejLabel.setText("La palabra se eliminó correctamente");
-            }
-            else{
-                this.eliminarMensajejLabel.setForeground(COLOR_ROJO);
-                this.eliminarMensajejLabel.setText("La palabra insertada no existe");
+            try {
+                if(gd.eliminarPalabra(palabraEliminar)){
+                    this.eliminarMensajejLabel.setForeground(COLOR_VERDE);
+                    this.eliminarMensajejLabel.setText("La palabra se eliminó correctamente");
+                }
+                else{
+                    this.eliminarMensajejLabel.setForeground(COLOR_ROJO);
+                    this.eliminarMensajejLabel.setText("La palabra insertada no existe");
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, "Excepción SQL: " + ex.getMessage());
             }
         
         }
